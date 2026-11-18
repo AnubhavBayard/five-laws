@@ -15,6 +15,7 @@ import { setupIonicReact } from '@ionic/react';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App';
+import { openDb } from './db/client';
 import { useProfile } from './store/profile';
 
 setupIonicReact({
@@ -22,6 +23,7 @@ setupIonicReact({
   animated: !window.matchMedia('(prefers-reduced-motion: reduce)').matches,
 });
 
+await openDb();
 await useProfile.getState().load();
 
 createRoot(document.getElementById('root') as HTMLElement).render(

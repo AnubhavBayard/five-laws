@@ -41,7 +41,15 @@ export default function Onboarding() {
     if (!ready) return;
     setBusy(true);
     await askNotificationPermission();
-    await save({ lifeStage, areas, checkinTime, aiEnabled: true, onboardedAt: new Date().toISOString() });
+    await save({
+      lifeStage,
+      areas,
+      checkinTime,
+      aiEnabled: true,
+      aiConsentAt: null,
+      unloadReminder: false,
+      onboardedAt: new Date().toISOString(),
+    });
     router.push('/tabs/today', 'root', 'replace');
   }
 
