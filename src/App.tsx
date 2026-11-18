@@ -4,9 +4,11 @@ import { bookOutline, journalOutline, sparklesOutline, sunnyOutline } from 'ioni
 import type { ReactNode } from 'react';
 import { Navigate, Route } from 'react-router-dom';
 import Chapter from './pages/Chapter';
+import FalklandTool from './pages/FalklandTool';
 import Insights from './pages/Insights';
 import Journal from './pages/Journal';
 import Laws from './pages/Laws';
+import MurphyTool from './pages/MurphyTool';
 import Onboarding from './pages/Onboarding';
 import Today from './pages/Today';
 import { useProfile } from './store/profile';
@@ -24,6 +26,8 @@ function Tabs() {
           <Route path="/tabs/today" element={<Today />} />
           <Route path="/tabs/laws" element={<Laws />} />
           <Route path="/tabs/laws/:law" element={<Chapter />} />
+          <Route path="/tabs/laws/murphy/new" element={<MurphyTool />} />
+          <Route path="/tabs/laws/falkland/new" element={<FalklandTool />} />
           <Route path="/tabs/journal" element={<Journal />} />
           <Route path="/tabs/insights" element={<Insights />} />
           <Route path="/tabs" element={<Navigate to="/tabs/today" replace />} />

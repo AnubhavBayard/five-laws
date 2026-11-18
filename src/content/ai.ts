@@ -1,3 +1,5 @@
+import type { FailReason } from '@shared/steps';
+
 /** Shown wherever the user turns AI help on. Keep it true to what ai-step actually sends and stores. */
 export const AI_CONSENT = {
   title: 'Use AI help?',
@@ -9,3 +11,20 @@ export const AI_CONSENT = {
     'Every tool also works without AI. You can turn this off at any time.',
   ],
 };
+
+/** Shown above a form the AI was asked to fill but didn't. null means the user chose to write it themselves. */
+export function aiFailNotice(reason: FailReason | null): string | null {
+  switch (reason) {
+    case null:
+      return null;
+    case 'over_cap':
+      return "You've used today's AI help. Fill this in yourself; it works just the same.";
+    case 'invalid':
+      return "The AI's answer didn't hold up, so we threw it away. Fill this in yourself.";
+    case 'timeout':
+    case 'upstream':
+      return "The AI didn't answer in time. Fill this in yourself.";
+    default:
+      return "AI help isn't available right now. Fill this in yourself.";
+  }
+}

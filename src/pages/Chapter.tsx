@@ -1,6 +1,10 @@
+import { IonButton } from '@ionic/react';
 import { useParams } from 'react-router-dom';
 import Page from '../components/Page';
 import { chapterFor } from '../content/chapters';
+
+/** Laws whose tool is built. The rest arrive in later milestones. */
+const HAS_TOOL = new Set(['murphy', 'falkland']);
 
 export default function Chapter() {
   const { law = '' } = useParams();
@@ -30,6 +34,11 @@ export default function Chapter() {
             )}
           </p>
         ))}
+        {HAS_TOOL.has(c.law) && (
+          <IonButton expand="block" className="ion-margin-top" routerLink={`/tabs/laws/${c.law}/new`}>
+            Try it: {c.toolName}
+          </IonButton>
+        )}
         <p className="footnote">
           <sup aria-hidden="true">*</sup> {c.footnote}
         </p>

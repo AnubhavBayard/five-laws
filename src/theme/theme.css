@@ -132,3 +132,22 @@ h1, h2, h3, .display {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Tool forms */
+.field { margin-top: 1rem; }
+.list-field { border: 0; margin: 1.25rem 0 0; padding: 0; }
+.list-field legend { font-family: var(--font-display); font-weight: 600; padding: 0; }
+.list-row { display: flex; align-items: center; gap: 0.25rem; }
+.list-row ion-input { flex: 1; }
+
+.notice {
+  border-left: 3px solid var(--highlight);
+  padding: 0.5rem 0.75rem;
+  background: var(--paper-raised);
+  color: var(--ink);
+}
+.notice-danger { border-left-color: var(--danger); }
+
+.ai-wait { text-align: center; padding: 2rem 0; color: var(--ink-soft); }
+
+.actions { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 1.5rem; }
