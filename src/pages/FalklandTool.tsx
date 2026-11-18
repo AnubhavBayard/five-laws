@@ -9,6 +9,7 @@ import { formatDay, today } from '../lib/dates';
 import { canDecide, canLeaveReview, canPark, type DecisionDraft, falkland, finishDecision, initFalkland } from '../pipelines/falkland';
 import { QUESTIONS } from '../pipelines/falkland.verdict';
 import { usePipeline } from '../pipelines/usePipeline';
+import { usePrefill } from '../lib/usePrefill';
 import { useProfile } from '../store/profile';
 
 const yesNo = (v: boolean | null) => (v === null ? undefined : v ? 'yes' : 'no');
@@ -16,13 +17,16 @@ const yesNo = (v: boolean | null) => (v === null ? undefined : v ? 'yes' : 'no')
 export default function FalklandTool() {
   const area = useProfile((s) => s.profile?.areas[0] ?? 'other');
   const [s, send] = usePipeline(falkland, initFalkland(area));
-  const [text, setText] = useState('');
+  const { prefill, link } = usePrefill();
+  const [typed, setText] = useState<string | null>(null);
+  const text = typed ?? prefill?.text ?? '';
   const [saveError, setSaveError] = useState(false);
   const d = s.draft;
   const edit = (patch: Partial<DecisionDraft>) => send({ type: 'edit', patch });
   const options = d.options.map((o) => o.trim()).filter(Boolean);
 
   async function submit() {
+    if (prefill) edit({ lifeArea: prefill.lifeArea });
     const next = send({ type: 'submit', text, ai: aiAvailable() });
     if (next.step !== 'extracting') return;
     const r = await runStep('extract_decision', { text: next.text });
@@ -44,6 +48,7 @@ export default function FalklandTool() {
     setSaveError(false);
     try {
       const saved = await decisions.create(finishDecision(d));
+      await link('decisions', saved.id);
       send({ type: 'saved', id: saved.id });
     } catch {
       setSaveError(true);

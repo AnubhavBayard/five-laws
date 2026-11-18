@@ -20,6 +20,7 @@ import {
   type Recipient,
 } from '../pipelines/gilbert';
 import { usePipeline } from '../pipelines/usePipeline';
+import { usePrefill } from '../lib/usePrefill';
 import { useProfile } from '../store/profile';
 
 const RECIPIENTS = Object.keys(RECIPIENT_LABEL) as Recipient[];
@@ -28,7 +29,9 @@ export default function GilbertTool() {
   const area = useProfile((s) => s.profile?.areas[0] ?? 'other');
   const [s, send] = usePipeline(gilbert, initGilbert(area));
   const [mode, setMode] = useState<Brief['mode']>('brief');
-  const [text, setText] = useState('');
+  const { prefill, link } = usePrefill();
+  const [typed, setText] = useState<string | null>(null);
+  const text = typed ?? prefill?.text ?? '';
   const [saveError, setSaveError] = useState(false);
   const [sent, setSent] = useState<string | null>(null);
   const d = s.draft;
@@ -36,6 +39,7 @@ export default function GilbertTool() {
   const skip = () => send({ type: 'ai_fail', reason: null });
 
   async function submit() {
+    if (prefill) edit({ lifeArea: prefill.lifeArea, sourceProblemId: prefill.problemId });
     const n = send({ type: 'submit', text, mode, ai: aiAvailable() });
     if (n.step === 'building') send(await runStepEvent('build_brief', { text: n.draft.taskAsGiven }));
     else if (n.step === 'breaking') send(await runStepEvent('break_goal', { goal: n.draft.taskAsGiven }));
@@ -51,7 +55,9 @@ export default function GilbertTool() {
   async function save() {
     setSaveError(false);
     try {
-      send({ type: 'saved', id: (await briefs.create(finishBrief(d))).id });
+      const saved = await briefs.create(finishBrief(d));
+      await link('briefs', saved.id);
+      send({ type: 'saved', id: saved.id });
     } catch {
       setSaveError(true);
     }

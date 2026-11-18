@@ -7,17 +7,21 @@ import { fears } from '../db/repos';
 import { formatDay, today } from '../lib/dates';
 import { canSaveFear, type FearDraft, finishFear, initMurphy, murphy } from '../pipelines/murphy';
 import { usePipeline } from '../pipelines/usePipeline';
+import { usePrefill } from '../lib/usePrefill';
 import { useProfile } from '../store/profile';
 
 export default function MurphyTool() {
   const area = useProfile((s) => s.profile?.areas[0] ?? 'other');
   const [s, send] = usePipeline(murphy, initMurphy(area));
-  const [text, setText] = useState('');
+  const { prefill, link } = usePrefill();
+  const [typed, setText] = useState<string | null>(null);
+  const text = typed ?? prefill?.text ?? '';
   const [saveError, setSaveError] = useState(false);
   const edit = (patch: Partial<FearDraft>) => send({ type: 'edit', patch });
   const d = s.draft;
 
   async function submit() {
+    if (prefill) edit({ lifeArea: prefill.lifeArea });
     const next = send({ type: 'submit', text, ai: aiAvailable() });
     if (next.step !== 'structuring') return;
     const r = await runStep('structure_fear', { text: next.text, today: today() });
@@ -28,6 +32,7 @@ export default function MurphyTool() {
     setSaveError(false);
     try {
       const saved = await fears.create(finishFear(d));
+      await link('fears', saved.id);
       send({ type: 'saved', id: saved.id });
     } catch {
       setSaveError(true);

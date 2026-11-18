@@ -50,7 +50,7 @@ export function kidlin(s: KidlinState, e: KidlinEvent): KidlinState {
     case 'answer':
       return s.step === 'clarify' ? { ...s, draft: { ...d, clarifyQA: d.clarifyQA.map((x, i) => (i === e.index ? { ...x, a: e.a } : x)) } } : s;
     case 'edit':
-      return s.step === 'review' ? { ...s, draft: { ...d, ...e.patch } } : s;
+      return s.step === 'review' || s.step === 'input' ? { ...s, draft: { ...d, ...e.patch } } : s;
     case 'next':
       return s.step === 'clarify' ? { ...s, step: e.ai ? 'structuring' : 'review' } : s;
     case 'back':

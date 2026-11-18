@@ -43,7 +43,7 @@ export function murphy(s: MurphyState, e: MurphyEvent): MurphyState {
     case 'ai_fail':
       return s.step === 'structuring' ? { ...s, step: 'review', notice: e.reason } : s;
     case 'edit':
-      return s.step === 'review' ? { ...s, draft: { ...s.draft, ...e.patch } } : s;
+      return s.step === 'review' || s.step === 'input' ? { ...s, draft: { ...s.draft, ...e.patch } } : s;
     case 'back':
       return s.step === 'review' ? { ...s, step: 'input', notice: null } : s;
     case 'saved':

@@ -8,18 +8,22 @@ import { today } from '../lib/dates';
 import { filled, highlightParts } from '../lib/text';
 import { usePipeline } from '../pipelines/usePipeline';
 import { initWilson, type LearningDraft, saveLearning, TOPIC_MAX, wilson } from '../pipelines/wilson';
+import { usePrefill } from '../lib/usePrefill';
 import { useProfile } from '../store/profile';
 
 export default function WilsonTool() {
   const area = useProfile((s) => s.profile?.areas[0] ?? 'other');
   const [s, send] = usePipeline(wilson, initWilson(area));
-  const [text, setText] = useState('');
+  const { prefill, link } = usePrefill();
+  const [typed, setText] = useState<string | null>(null);
+  const text = typed ?? prefill?.text ?? '';
   const [saveError, setSaveError] = useState(false);
   const d = s.draft;
   const edit = (patch: Partial<LearningDraft>) => send({ type: 'edit', patch });
   const skip = () => send({ type: 'ai_fail', reason: null });
 
   async function submit() {
+    if (prefill) edit({ lifeArea: prefill.lifeArea });
     const n = send({ type: 'submit', text, ai: aiAvailable() });
     if (n.step === 'extracting') send(await runStepEvent('extract_learning', { text: text.trim() }));
   }
@@ -36,7 +40,9 @@ export default function WilsonTool() {
   async function save() {
     setSaveError(false);
     try {
-      send({ type: 'saved', id: (await saveLearning(d, today())).id });
+      const saved = await saveLearning(d, today());
+      await link('learning_entries', saved.id);
+      send({ type: 'saved', id: saved.id });
     } catch {
       setSaveError(true);
     }

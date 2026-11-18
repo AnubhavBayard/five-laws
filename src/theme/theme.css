@@ -151,3 +151,10 @@ h1, h2, h3, .display {
 .ai-wait { text-align: center; padding: 2rem 0; color: var(--ink-soft); }
 
 .actions { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 1.5rem; }
+
+.tag-badge {
+  --background: var(--highlight);
+  --color: var(--highlight-ink);
+  font-family: var(--font-read);
+  font-weight: 600;
+}

@@ -6,18 +6,22 @@ import Page from '../components/Page';
 import { problems } from '../db/repos';
 import { canSaveProblem, finishProblem, initKidlin, kidlin, type ProblemDraft } from '../pipelines/kidlin';
 import { usePipeline } from '../pipelines/usePipeline';
+import { usePrefill } from '../lib/usePrefill';
 import { useProfile } from '../store/profile';
 
 export default function KidlinTool() {
   const area = useProfile((s) => s.profile?.areas[0] ?? 'other');
   const [s, send] = usePipeline(kidlin, initKidlin(area));
-  const [text, setText] = useState('');
+  const { prefill, link } = usePrefill();
+  const [typed, setText] = useState<string | null>(null);
+  const text = typed ?? prefill?.text ?? '';
   const [saveError, setSaveError] = useState(false);
   const d = s.draft;
   const edit = (patch: Partial<ProblemDraft>) => send({ type: 'edit', patch });
   const skip = () => send({ type: 'ai_fail', reason: null });
 
   async function submit() {
+    if (prefill) edit({ lifeArea: prefill.lifeArea });
     const n = send({ type: 'submit', text, ai: aiAvailable() });
     if (n.step === 'clarifying') send(await runStepEvent('clarify_problem', { rant: n.draft.rant }));
   }
@@ -32,7 +36,9 @@ export default function KidlinTool() {
   async function save() {
     setSaveError(false);
     try {
-      send({ type: 'saved', id: (await problems.create(finishProblem(d))).id });
+      const saved = await problems.create(finishProblem(d));
+      await link('problems', saved.id);
+      send({ type: 'saved', id: saved.id });
     } catch {
       setSaveError(true);
     }
@@ -108,7 +114,11 @@ export default function KidlinTool() {
           <p>
             <mark className="highlight">{d.nextStep}</mark>
           </p>
+          <p className="muted">If the problem is a task someone gave you with no clear brief, the brief builder can turn it into questions to ask them.</p>
           <div className="actions">
+            <IonButton expand="block" fill="outline" routerLink={`/tabs/laws/gilbert/new?problem=${s.savedId ?? ''}`}>
+              Turn this into a brief
+            </IonButton>
             <IonButton expand="block" routerLink="/tabs/today" routerDirection="root">
               Back to Today
             </IonButton>
