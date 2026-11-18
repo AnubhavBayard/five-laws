@@ -1,4 +1,5 @@
 import { Capacitor } from '@capacitor/core';
+import { Directory, Encoding, Filesystem } from '@capacitor/filesystem';
 import { Share } from '@capacitor/share';
 import { IonButton, IonInput, IonItem, IonToggle, useIonAlert, useIonRouter } from '@ionic/react';
 import { useRef, useState } from 'react';
@@ -39,7 +40,15 @@ export default function Settings() {
       const text = JSON.stringify(await exportAll(), null, 2);
       const name = `five-laws-${today()}.json`;
       if (Capacitor.isNativePlatform()) {
-        await Share.share({ title: name, text, dialogTitle: 'Save your journal backup' });
+        // A real .json file in the app's private cache, handed to the share sheet (Files, Drive, email…).
+        // The OS clears the cache; the same day's export overwrites it.
+        const { uri } = await Filesystem.writeFile({ path: name, data: text, directory: Directory.Cache, encoding: Encoding.UTF8 });
+        try {
+          await Share.share({ title: name, files: [uri], dialogTitle: 'Save your journal backup' });
+        } catch (e) {
+          if (e instanceof Error && /cancel/i.test(e.message)) return setStatus('Export cancelled. Nothing was saved anywhere.');
+          throw e;
+        }
       } else {
         const a = document.createElement('a');
         a.href = URL.createObjectURL(new Blob([text], { type: 'application/json' }));

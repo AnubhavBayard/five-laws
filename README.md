@@ -125,6 +125,8 @@ Reminders use local notifications at the user's check-in time:
 
 They are rebuilt on start, on resume and after saves. Lock-screen text never includes journal content. The exact-alarm permission isn't requested, so Android may deliver reminders a few minutes late.
 
+Backups: Settings → Export a backup writes `five-laws-YYYY-MM-DD.json` to the app's private cache and opens the share sheet, so the user picks where it goes (Files, Drive, email). In the browser it downloads instead. Restore reads the file back through the system file picker.
+
 ## Code map
 
 ```
