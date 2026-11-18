@@ -15,3 +15,10 @@ export const LIFE_AREA_LABEL: Record<LifeArea, string> = {
   relationships: 'Relationships',
   other: 'Something else',
 };
+
+export const RECIPIENT_LABEL: Record<'teacher' | 'manager' | 'client' | 'teammate', string> = {
+  teacher: 'A teacher',
+  manager: 'My manager',
+  client: 'A client',
+  teammate: 'A teammate',
+};

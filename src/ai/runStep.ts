@@ -1,5 +1,5 @@
 import { Preferences } from '@capacitor/preferences';
-import { STEPS, type StepId, type StepInput, type StepResult } from '@shared/steps';
+import { type FailReason, STEPS, type StepId, type StepInput, type StepOutput, type StepResult } from '@shared/steps';
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 import { z } from 'zod';
 import { logAiStep } from '../db/repos';
@@ -95,4 +95,14 @@ function parseResult<S extends StepId>(stepId: S, data: unknown): StepResult<S> 
   const reasons = ['over_cap', 'timeout', 'invalid', 'too_long', 'bad_input', 'unknown_step', 'unauthorized'] as const;
   const reason = reasons.find((r) => r === d?.reason) ?? 'upstream';
   return { ok: false, reason };
+}
+
+/** A step's result as a pipeline event, tagged with the step so reducers can tell answers apart. */
+export type AiEvent<S extends StepId> =
+  | { [K in S]: { type: 'ai_ok'; stepId: K; output: StepOutput<K> } }[S]
+  | { type: 'ai_fail'; reason: FailReason | null };
+
+export async function runStepEvent<S extends StepId>(stepId: S, input: StepInput<S>): Promise<AiEvent<S>> {
+  const r = await runStep(stepId, input);
+  return r.ok ? ({ type: 'ai_ok', stepId, output: r.output } as AiEvent<S>) : { type: 'ai_fail', reason: r.reason };
 }

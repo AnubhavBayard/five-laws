@@ -2,6 +2,7 @@ import type { LifeArea } from '@shared/laws';
 import type { FailReason, StepOutput } from '@shared/steps';
 import type { Decision } from '../db/entities';
 import { addDays } from '../lib/dates';
+import { filled } from '../lib/text';
 import { verdict } from './falkland.verdict';
 
 export type DecisionDraft = Omit<Decision, 'id' | 'createdAt' | 'updatedAt'>;
@@ -97,8 +98,6 @@ export function falkland(s: FalklandState, e: FalklandEvent): FalklandState {
       return s.step === 'park' || s.step === 'decide' ? { ...s, step: 'saved', savedId: e.id } : s;
   }
 }
-
-const filled = (xs: string[]) => xs.map((x) => x.trim()).filter(Boolean);
 
 export const canLeaveReview = (d: DecisionDraft) => d.decision.trim() !== '' && filled(d.options).length >= 2;
 export const canPark = (d: DecisionDraft) => d.revisitOn !== null && d.revisitOn !== '';
