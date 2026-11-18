@@ -1,7 +1,7 @@
-import { IonApp, IonIcon, IonLabel, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs } from '@ionic/react';
+import { IonApp, IonIcon, IonLabel, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs, useIonRouter } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { bookOutline, journalOutline, sparklesOutline, sunnyOutline } from 'ionicons/icons';
-import type { ReactNode } from 'react';
+import { type ReactNode, useEffect } from 'react';
 import { Navigate, Route } from 'react-router-dom';
 import Chapter from './pages/Chapter';
 import FalklandTool from './pages/FalklandTool';
@@ -15,10 +15,23 @@ import Onboarding from './pages/Onboarding';
 import Today from './pages/Today';
 import WilsonTool from './pages/WilsonTool';
 import { useProfile } from './store/profile';
+import { useDeepLink } from './store/ui';
 
 function RequireProfile({ children }: { children: ReactNode }) {
   const profile = useProfile((s) => s.profile);
   return profile ? children : <Navigate to="/onboarding" replace />;
+}
+
+/** Opens paths requested from outside React, e.g. a notification tap. */
+function DeepLinks() {
+  const path = useDeepLink((s) => s.path);
+  const router = useIonRouter();
+  useEffect(() => {
+    if (!path) return;
+    useDeepLink.getState().clear();
+    router.push(path, 'root', 'replace');
+  }, [path, router]);
+  return null;
 }
 
 function Tabs() {
@@ -65,6 +78,7 @@ export default function App() {
   return (
     <IonApp>
       <IonReactRouter>
+        <DeepLinks />
         <IonRouterOutlet>
           <Route path="/onboarding" element={<Onboarding />} />
           <Route path="/tabs/*" element={<Tabs />} />

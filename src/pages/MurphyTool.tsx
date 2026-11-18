@@ -8,6 +8,7 @@ import { formatDay, today } from '../lib/dates';
 import { canSaveFear, type FearDraft, finishFear, initMurphy, murphy } from '../pipelines/murphy';
 import { usePipeline } from '../pipelines/usePipeline';
 import { usePrefill } from '../lib/usePrefill';
+import { rescheduleAll } from '../notifications/schedule';
 import { useProfile } from '../store/profile';
 
 export default function MurphyTool() {
@@ -33,6 +34,7 @@ export default function MurphyTool() {
     try {
       const saved = await fears.create(finishFear(d));
       await link('fears', saved.id);
+      void rescheduleAll();
       send({ type: 'saved', id: saved.id });
     } catch {
       setSaveError(true);

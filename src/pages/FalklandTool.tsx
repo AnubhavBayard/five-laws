@@ -10,6 +10,7 @@ import { canDecide, canLeaveReview, canPark, type DecisionDraft, falkland, finis
 import { QUESTIONS } from '../pipelines/falkland.verdict';
 import { usePipeline } from '../pipelines/usePipeline';
 import { usePrefill } from '../lib/usePrefill';
+import { rescheduleAll } from '../notifications/schedule';
 import { useProfile } from '../store/profile';
 
 const yesNo = (v: boolean | null) => (v === null ? undefined : v ? 'yes' : 'no');
@@ -49,6 +50,7 @@ export default function FalklandTool() {
     try {
       const saved = await decisions.create(finishDecision(d));
       await link('decisions', saved.id);
+      void rescheduleAll();
       send({ type: 'saved', id: saved.id });
     } catch {
       setSaveError(true);

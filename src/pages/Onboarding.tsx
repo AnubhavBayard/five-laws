@@ -16,6 +16,7 @@ import { LIFE_AREAS, LIFE_STAGES, type LifeArea, type LifeStage } from '@shared/
 import { useState } from 'react';
 import { AI_CONSENT } from '../content/ai';
 import { LIFE_AREA_LABEL, LIFE_STAGE_LABEL } from '../content/labels';
+import { rescheduleAll } from '../notifications/schedule';
 import { useProfile } from '../store/profile';
 
 async function askNotificationPermission() {
@@ -54,6 +55,7 @@ export default function Onboarding() {
       unloadReminder: false,
       onboardedAt: now,
     });
+    void rescheduleAll();
     router.push('/tabs/today', 'root', 'replace');
   }
 

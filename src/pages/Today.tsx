@@ -2,6 +2,7 @@ import { IonBadge, IonButton, IonItem, IonLabel, IonList, useIonRouter } from '@
 import type { Law } from '@shared/laws';
 import { useState } from 'react';
 import { aiAvailable, runStepEvent } from '../ai/runStep';
+import FollowUps from '../components/FollowUps';
 import { AiWait, SaveError, TextField } from '../components/form';
 import Page from '../components/Page';
 import { chapterFor } from '../content/chapters';
@@ -133,10 +134,7 @@ export default function Today() {
         </>
       )}
 
-      <h2>Follow-ups</h2>
-      <p className="empty">
-        Nothing is due. Fears you log and decisions you park will come back here on the day they need you.
-      </p>
+      <FollowUps />
     </Page>
   );
 }

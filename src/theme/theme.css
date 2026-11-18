@@ -158,3 +158,14 @@ h1, h2, h3, .display {
   font-family: var(--font-read);
   font-weight: 600;
 }
+
+/* Today follow-ups */
+.followup {
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  background: var(--paper-raised);
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+}
+.followup .hand { margin: 0.25rem 0; }
+.followup-buttons { display: flex; flex-wrap: wrap; gap: 0.5rem; }

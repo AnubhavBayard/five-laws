@@ -16,6 +16,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App';
 import { openDb } from './db/client';
+import { initNotifications } from './notifications/schedule';
 import { useProfile } from './store/profile';
 
 setupIonicReact({
@@ -25,6 +26,7 @@ setupIonicReact({
 
 await openDb();
 await useProfile.getState().load();
+void initNotifications();
 
 createRoot(document.getElementById('root') as HTMLElement).render(
   <StrictMode>
