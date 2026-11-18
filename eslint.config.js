@@ -10,6 +10,9 @@ export default tseslint.config(
   reactHooks.configs.flat.recommended,
   {
     languageOptions: { globals: { ...globals.browser, ...globals.node } },
-    rules: { '@typescript-eslint/no-explicit-any': 'error' },
+    rules: {
+      '@typescript-eslint/no-explicit-any': 'error',
+      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
+    },
   },
 );

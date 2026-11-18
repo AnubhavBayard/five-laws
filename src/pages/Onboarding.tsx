@@ -9,10 +9,12 @@ import {
   IonPage,
   IonRadio,
   IonRadioGroup,
+  IonToggle,
   useIonRouter,
 } from '@ionic/react';
 import { LIFE_AREAS, LIFE_STAGES, type LifeArea, type LifeStage } from '@shared/laws';
 import { useState } from 'react';
+import { AI_CONSENT } from '../content/ai';
 import { LIFE_AREA_LABEL, LIFE_STAGE_LABEL } from '../content/labels';
 import { useProfile } from '../store/profile';
 
@@ -30,6 +32,7 @@ export default function Onboarding() {
   const [lifeStage, setLifeStage] = useState<LifeStage | null>(null);
   const [areas, setAreas] = useState<LifeArea[]>([]);
   const [checkinTime, setCheckinTime] = useState('21:00');
+  const [useAi, setUseAi] = useState(false);
   const [busy, setBusy] = useState(false);
 
   const toggleArea = (a: LifeArea, on: boolean) =>
@@ -41,14 +44,15 @@ export default function Onboarding() {
     if (!ready) return;
     setBusy(true);
     await askNotificationPermission();
+    const now = new Date().toISOString();
     await save({
       lifeStage,
       areas,
       checkinTime,
-      aiEnabled: true,
-      aiConsentAt: null,
+      aiEnabled: useAi,
+      aiConsentAt: useAi ? now : null,
       unloadReminder: false,
-      onboardedAt: new Date().toISOString(),
+      onboardedAt: now,
     });
     router.push('/tabs/today', 'root', 'replace');
   }
@@ -59,7 +63,7 @@ export default function Onboarding() {
         <main className="page">
           <p className="numeral">Before the first chapter</p>
           <h1>Five laws, written in your own hand.</h1>
-          <p className="muted">Three quick questions so the examples fit your life. Everything stays on this phone.</p>
+          <p className="muted">Three quick questions so the examples fit your life, and one about AI help. Your journal stays on this phone.</p>
 
           <h2 id="stage-q">Where are you right now?</h2>
           <IonList aria-labelledby="stage-q">
@@ -93,6 +97,18 @@ export default function Onboarding() {
               value={checkinTime}
               onIonInput={(e) => setCheckinTime(e.detail.value ?? '')}
             />
+          </IonItem>
+
+          <h2>{AI_CONSENT.title}</h2>
+          <ul className="muted">
+            {AI_CONSENT.points.map((p) => (
+              <li key={p}>{p}</li>
+            ))}
+          </ul>
+          <IonItem>
+            <IonToggle checked={useAi} onIonChange={(e) => setUseAi(e.detail.checked)}>
+              {AI_CONSENT.toggle}
+            </IonToggle>
           </IonItem>
 
           <IonButton expand="block" className="ion-margin-top" disabled={!ready || busy} onClick={start}>
