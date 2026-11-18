@@ -184,3 +184,13 @@ h1, h2, h3, .display {
 .stat { border: 1px solid var(--rule); border-radius: 8px; padding: 0.5rem 0.75rem; background: var(--paper-raised); }
 .stat strong { display: block; font-family: var(--font-display); font-size: 1.75rem; line-height: 1.1; }
 .stat span { color: var(--ink-soft); font-size: 0.875rem; }
+
+/* Visible to screen readers only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

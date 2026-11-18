@@ -15,7 +15,8 @@
     "lint": "eslint .",
     "test": "vitest run",
     "test:watch": "vitest",
-    "android": "npm run build && cap sync android && cap run android"
+    "android": "npm run build && cap sync android && cap run android",
+    "eval": "node scripts/eval-steps.ts"
   },
   "dependencies": {
     "@capacitor-community/sqlite": "8.1.1",

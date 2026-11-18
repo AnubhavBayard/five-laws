@@ -1,4 +1,4 @@
-import { IonButton, IonItem, IonList, IonRadio, IonRadioGroup } from '@ionic/react';
+import { IonButton, IonItem, IonRadio, IonRadioGroup } from '@ionic/react';
 import { useState } from 'react';
 import { aiAvailable, runStep } from '../ai/runStep';
 import { AiNotice, AiWait, AreaSelect, ListField, SaveError, TextField } from '../components/form';
@@ -104,8 +104,7 @@ export default function FalklandTool() {
           {(['q1', 'q2', 'q3'] as const).map((q) => (
             <section key={q}>
               <h2 id={`falkland-${q}`}>{QUESTIONS[q]}</h2>
-              <IonList aria-labelledby={`falkland-${q}`}>
-                <IonRadioGroup value={yesNo(d[q])} onIonChange={(e) => edit({ [q]: e.detail.value === 'yes' })}>
+              <IonRadioGroup aria-labelledby={`falkland-${q}`} value={yesNo(d[q])} onIonChange={(e) => edit({ [q]: e.detail.value === 'yes' })}>
                   <IonItem>
                     <IonRadio value="yes">Yes</IonRadio>
                   </IonItem>
@@ -113,7 +112,6 @@ export default function FalklandTool() {
                     <IonRadio value="no">No</IonRadio>
                   </IonItem>
                 </IonRadioGroup>
-              </IonList>
             </section>
           ))}
           <div className="actions">
@@ -149,8 +147,7 @@ export default function FalklandTool() {
           <h1>{VERDICT_COPY[d.verdict].title}</h1>
           <p>{VERDICT_COPY[d.verdict].body}</p>
           <h2 id="falkland-choice">Which one?</h2>
-          <IonList aria-labelledby="falkland-choice">
-            <IonRadioGroup value={d.choice ?? undefined} onIonChange={(e) => edit({ choice: e.detail.value as string })}>
+          <IonRadioGroup aria-labelledby="falkland-choice" value={d.choice ?? undefined} onIonChange={(e) => edit({ choice: e.detail.value as string })}>
               {options.map((o) => (
                 <IonItem key={o}>
                   <IonRadio value={o}>
@@ -159,7 +156,6 @@ export default function FalklandTool() {
                 </IonItem>
               ))}
             </IonRadioGroup>
-          </IonList>
           <TextField label="What do you expect to happen?" multiline value={d.expectedOutcome ?? ''} onChange={(expectedOutcome) => edit({ expectedOutcome })} />
           <TextField label="Check how it went on" type="date" helper="Optional. Comparing what you expected with what happened sharpens your next call." value={d.reviewOn ?? ''} onChange={(v) => edit({ reviewOn: v || null })} />
           <SaveError show={saveError} />

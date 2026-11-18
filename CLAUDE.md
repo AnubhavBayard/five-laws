@@ -21,3 +21,8 @@ Offline-first Ionic React + Capacitor app (Android first). The full plan is in t
 - Design tokens live in `src/theme/theme.css`. User-written text uses `.hand` (Caveat, pen colour). Key lines use `<mark className="highlight">`. Keep contrast ≥ 4.5:1 in both themes; respect reduced motion.
 - Every control has a label. Use rem units so system text size scales.
 - Tests: Vitest + RTL, no network. Pure logic (verdicts, dates, stats, checks) gets unit tests.
+
+## Gotchas
+- Ionic 9 inputs don't get props or events under jsdom: test reducers and logic, and check screens in a real browser (`npm run dev`).
+- Keep `sql.js` at 1.11.0 (matches jeep-sqlite 2.8.0); a newer wasm breaks browser SQLite.
+- Don't override `role` on Ionic components (e.g. `IonTabBar` is a tablist). Put `aria-labelledby` on `IonRadioGroup` itself, not on a wrapping `IonList`.

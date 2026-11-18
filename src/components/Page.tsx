@@ -1,9 +1,10 @@
 import { IonBackButton, IonButtons, IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import type { ReactNode } from 'react';
 
-type Props = { title: string; backHref?: string; end?: ReactNode; children: ReactNode };
+/** `srTitle`: the page has no visible h1, so give screen readers one with the toolbar title. */
+type Props = { title: string; backHref?: string; end?: ReactNode; srTitle?: boolean; children: ReactNode };
 
-export default function Page({ title, backHref, end, children }: Props) {
+export default function Page({ title, backHref, end, srTitle, children }: Props) {
   return (
     <IonPage>
       <IonHeader className="ion-no-border">
@@ -18,7 +19,10 @@ export default function Page({ title, backHref, end, children }: Props) {
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <main className="page">{children}</main>
+        <div className="page">
+          {srTitle && <h1 className="sr-only">{title}</h1>}
+          {children}
+        </div>
       </IonContent>
     </IonPage>
   );

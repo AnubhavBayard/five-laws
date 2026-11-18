@@ -54,7 +54,7 @@ export default function Insights() {
 
   if (!s || totalEntries(s) === 0) {
     return (
-      <Page title="Insights">
+      <Page srTitle title="Insights">
         <p className="empty">Insights appear once you've written a few entries. Every number here is counted from your own journal.</p>
       </Page>
     );
@@ -62,7 +62,7 @@ export default function Insights() {
 
   const { fears: f, problems: p, learning: l, decisions: d } = s;
   return (
-    <Page title="Insights">
+    <Page srTitle title="Insights">
       <p className="muted">Every number here is counted from your own journal, on this phone.</p>
 
       {obs.state === 'busy' && <AiWait label="Reading your numbers…" onSkip={() => setObs({ state: 'none' })} />}
@@ -112,6 +112,11 @@ export default function Insights() {
       <h2>Briefs and plans</h2>
       <div className="stat-grid">
         <Stat n={s.briefs} label="written" />
+      </div>
+      <div className="actions">
+        <IonButton expand="block" fill="clear" routerLink="/tabs/journal">
+          Read the entries behind these numbers
+        </IonButton>
       </div>
     </Page>
   );

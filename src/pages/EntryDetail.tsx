@@ -60,7 +60,7 @@ export default function EntryDetail() {
   }
 
   return (
-    <Page title={title} backHref="/tabs/journal">
+    <Page srTitle title={title} backHref="/tabs/journal">
       <p className="numeral">{new Date(String(entry.createdAt)).toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}</p>
       <dl className="fields">
         {entryFields(table, entry).map((f) => (

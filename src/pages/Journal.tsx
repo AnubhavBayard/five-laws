@@ -21,7 +21,7 @@ export default function Journal() {
   const shown = items ? filterJournal(items, f) : [];
 
   return (
-    <Page title="Journal">
+    <Page srTitle title="Journal">
       {items !== null && items.length === 0 ? (
         <p className="empty">Your journal is empty. Everything you write in a chapter lands here, newest first.</p>
       ) : (

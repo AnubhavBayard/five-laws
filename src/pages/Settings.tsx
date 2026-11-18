@@ -108,7 +108,7 @@ export default function Settings() {
   }
 
   return (
-    <Page title="Settings" backHref="/tabs/today">
+    <Page srTitle title="Settings" backHref="/tabs/today">
       {status && (
         <p className="notice" role="status">
           {status}

@@ -62,21 +62,19 @@ export default function Onboarding() {
   return (
     <IonPage>
       <IonContent>
-        <main className="page">
+        <div className="page">
           <p className="numeral">Before the first chapter</p>
           <h1>Five laws, written in your own hand.</h1>
           <p className="muted">Three quick questions so the examples fit your life, and one about AI help. Your journal stays on this phone.</p>
 
           <h2 id="stage-q">Where are you right now?</h2>
-          <IonList aria-labelledby="stage-q">
-            <IonRadioGroup value={lifeStage} onIonChange={(e) => setLifeStage(e.detail.value as LifeStage)}>
+          <IonRadioGroup aria-labelledby="stage-q" value={lifeStage} onIonChange={(e) => setLifeStage(e.detail.value as LifeStage)}>
               {LIFE_STAGES.map((s) => (
                 <IonItem key={s}>
                   <IonRadio value={s}>{LIFE_STAGE_LABEL[s]}</IonRadio>
                 </IonItem>
               ))}
             </IonRadioGroup>
-          </IonList>
 
           <h2 id="areas-q">What do you want to work on?</h2>
           <p className="muted">Pick as many as you like.</p>
@@ -119,7 +117,7 @@ export default function Onboarding() {
           <p className="muted" style={{ fontSize: '0.875rem' }}>
             We'll ask to send notifications next, only for your check-in and the follow-ups you set.
           </p>
-        </main>
+        </div>
       </IonContent>
     </IonPage>
   );

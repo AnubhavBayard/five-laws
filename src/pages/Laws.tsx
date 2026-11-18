@@ -4,7 +4,7 @@ import { CHAPTERS } from '../content/chapters';
 
 export default function Laws() {
   return (
-    <Page title="Laws">
+    <Page srTitle title="Laws">
       <p className="muted">Five short chapters. Read one, then use its tool on your own life.</p>
       <IonList lines="full">
         {CHAPTERS.map((c) => (

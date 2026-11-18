@@ -55,7 +55,7 @@ function Tabs() {
           <Route path="/tabs/insights" element={<Insights />} />
           <Route path="/tabs" element={<Navigate to="/tabs/today" replace />} />
         </IonRouterOutlet>
-        <IonTabBar slot="bottom">
+        <IonTabBar slot="bottom" aria-label="Sections">
           <IonTabButton tab="today" href="/tabs/today">
             <IonIcon aria-hidden="true" icon={sunnyOutline} />
             <IonLabel>Today</IonLabel>

@@ -1,4 +1,4 @@
-import { IonButton, IonItem, IonList, IonRadio, IonRadioGroup, useIonViewWillEnter } from '@ionic/react';
+import { IonButton, IonItem, IonRadio, IonRadioGroup, useIonViewWillEnter } from '@ionic/react';
 import { useCallback, useState } from 'react';
 import type { Decision, Fear } from '../db/entities';
 import { decisions, fears } from '../db/repos';
@@ -102,8 +102,7 @@ function RevisitCard({ d, act }: { d: Decision; act: Act }) {
       {deciding ? (
         <>
           <p id={groupId}>Which one?</p>
-          <IonList aria-labelledby={groupId}>
-            <IonRadioGroup value={choice ?? undefined} onIonChange={(e) => setChoice(e.detail.value as string)}>
+          <IonRadioGroup aria-labelledby={groupId} value={choice ?? undefined} onIonChange={(e) => setChoice(e.detail.value as string)}>
               {d.options.map((o) => (
                 <IonItem key={o}>
                   <IonRadio value={o}>
@@ -112,7 +111,6 @@ function RevisitCard({ d, act }: { d: Decision; act: Act }) {
                 </IonItem>
               ))}
             </IonRadioGroup>
-          </IonList>
           <TextField label="What do you expect to happen?" multiline value={expected} onChange={setExpected} />
           <div className="followup-buttons">
             <IonButton size="small" disabled={!choice} onClick={() => choice && void act(() => decideParked(d.id, choice, expected))}>

@@ -1,6 +1,6 @@
 import { Clipboard } from '@capacitor/clipboard';
 import { Share } from '@capacitor/share';
-import { IonButton, IonItem, IonList, IonRadio, IonRadioGroup } from '@ionic/react';
+import { IonButton, IonItem, IonRadio, IonRadioGroup } from '@ionic/react';
 import { useState } from 'react';
 import { aiAvailable, runStepEvent } from '../ai/runStep';
 import { AiNotice, AiWait, AreaSelect, ListField, SaveError, TextField } from '../components/form';
@@ -92,8 +92,7 @@ export default function GilbertTool() {
         <>
           <h1>What do you need to do?</h1>
           <h2 id="gilbert-mode">What kind is it?</h2>
-          <IonList aria-labelledby="gilbert-mode">
-            <IonRadioGroup value={mode} onIonChange={(e) => setMode(e.detail.value as Brief['mode'])}>
+          <IonRadioGroup aria-labelledby="gilbert-mode" value={mode} onIonChange={(e) => setMode(e.detail.value as Brief['mode'])}>
               <IonItem>
                 <IonRadio value="brief">Someone gave me a task and it's unclear</IonRadio>
               </IonItem>
@@ -101,7 +100,6 @@ export default function GilbertTool() {
                 <IonRadio value="goal">I have a big goal and no first step</IonRadio>
               </IonItem>
             </IonRadioGroup>
-          </IonList>
           <TextField
             label={mode === 'brief' ? 'The task, as you were told it' : 'Your goal'}
             multiline
@@ -130,15 +128,13 @@ export default function GilbertTool() {
           <TextField label="Who signs it off" value={d.approver ?? ''} onChange={(v) => edit({ approver: v })} helper="Leave it blank if nobody said." />
           <ListField label="Questions to ask before you start" itemLabel="Question" max={3} values={d.openQuestions} onChange={(openQuestions) => edit({ openQuestions })} />
           <h2 id="gilbert-recipient">Who gave you the task?</h2>
-          <IonList aria-labelledby="gilbert-recipient">
-            <IonRadioGroup value={d.recipient ?? undefined} onIonChange={(e) => edit({ recipient: e.detail.value as Recipient })}>
+          <IonRadioGroup aria-labelledby="gilbert-recipient" value={d.recipient ?? undefined} onIonChange={(e) => edit({ recipient: e.detail.value as Recipient })}>
               {RECIPIENTS.map((r) => (
                 <IonItem key={r}>
                   <IonRadio value={r}>{RECIPIENT_LABEL[r]}</IonRadio>
                 </IonItem>
               ))}
             </IonRadioGroup>
-          </IonList>
           <AreaSelect value={d.lifeArea} onChange={(lifeArea) => edit({ lifeArea })} />
           <div className="actions">
             <IonButton expand="block" disabled={!canLeaveBrief(d)} onClick={next}>
