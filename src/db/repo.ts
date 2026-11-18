@@ -42,6 +42,13 @@ export function entryRepo<S extends z.ZodObject>(table: string, schema: S) {
       await write(entity, false);
       return entity;
     },
+    /** Inserts an entity exactly as given (id and timestamps included). Used by backup import. */
+    async put(entity: T): Promise<void> {
+      await write(entity, true);
+    },
+    async clear(): Promise<void> {
+      await getDb().run(`DELETE FROM ${table}`);
+    },
     async remove(id: string): Promise<void> {
       await getDb().run(`DELETE FROM ${table} WHERE id = ?`, [id]);
     },

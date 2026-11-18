@@ -4,6 +4,7 @@ import { bookOutline, journalOutline, sparklesOutline, sunnyOutline } from 'ioni
 import { type ReactNode, useEffect } from 'react';
 import { Navigate, Route } from 'react-router-dom';
 import Chapter from './pages/Chapter';
+import EntryDetail from './pages/EntryDetail';
 import FalklandTool from './pages/FalklandTool';
 import GilbertTool from './pages/GilbertTool';
 import Insights from './pages/Insights';
@@ -12,6 +13,7 @@ import KidlinTool from './pages/KidlinTool';
 import Laws from './pages/Laws';
 import MurphyTool from './pages/MurphyTool';
 import Onboarding from './pages/Onboarding';
+import Settings from './pages/Settings';
 import Today from './pages/Today';
 import WilsonTool from './pages/WilsonTool';
 import { useProfile } from './store/profile';
@@ -48,6 +50,8 @@ function Tabs() {
           <Route path="/tabs/laws/wilson/new" element={<WilsonTool />} />
           <Route path="/tabs/laws/gilbert/new" element={<GilbertTool />} />
           <Route path="/tabs/journal" element={<Journal />} />
+          <Route path="/tabs/journal/:table/:id" element={<EntryDetail />} />
+          <Route path="/tabs/settings" element={<Settings />} />
           <Route path="/tabs/insights" element={<Insights />} />
           <Route path="/tabs" element={<Navigate to="/tabs/today" replace />} />
         </IonRouterOutlet>

@@ -1,9 +1,9 @@
 import { IonBackButton, IonButtons, IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import type { ReactNode } from 'react';
 
-type Props = { title: string; backHref?: string; children: ReactNode };
+type Props = { title: string; backHref?: string; end?: ReactNode; children: ReactNode };
 
-export default function Page({ title, backHref, children }: Props) {
+export default function Page({ title, backHref, end, children }: Props) {
   return (
     <IonPage>
       <IonHeader className="ion-no-border">
@@ -14,6 +14,7 @@ export default function Page({ title, backHref, children }: Props) {
             </IonButtons>
           )}
           <IonTitle className="display">{title}</IonTitle>
+          {end && <IonButtons slot="end">{end}</IonButtons>}
         </IonToolbar>
       </IonHeader>
       <IonContent>

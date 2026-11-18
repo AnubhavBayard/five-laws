@@ -48,6 +48,11 @@
   --ion-color-primary-contrast: var(--paper);
   --ion-color-primary-shade: var(--ink);
   --ion-color-primary-tint: var(--ink-soft);
+
+  --ion-color-danger: var(--danger);
+  --ion-color-danger-contrast: var(--paper);
+  --ion-color-danger-shade: var(--danger);
+  --ion-color-danger-tint: var(--danger);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -169,3 +174,13 @@ h1, h2, h3, .display {
 }
 .followup .hand { margin: 0.25rem 0; }
 .followup-buttons { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+/* Journal */
+.filters { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-bottom: 0.5rem; }
+.fields dt { font-family: var(--font-display); font-weight: 600; margin-top: 1rem; }
+.fields dd { margin: 0.25rem 0 0; }
+.fields dd ul { margin: 0; padding-left: 1.25rem; }
+.stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr)); gap: 0.75rem; margin: 0.5rem 0 1.5rem; }
+.stat { border: 1px solid var(--rule); border-radius: 8px; padding: 0.5rem 0.75rem; background: var(--paper-raised); }
+.stat strong { display: block; font-family: var(--font-display); font-size: 1.75rem; line-height: 1.1; }
+.stat span { color: var(--ink-soft); font-size: 0.875rem; }

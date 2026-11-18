@@ -1,0 +1,76 @@
+import type { JournalTable } from '../db/journal';
+
+/** Field labels for an entry's detail page, in reading order. Fields not listed are not shown. */
+export const FIELD_LABELS: Record<JournalTable, [string, string][]> = {
+  fears: [
+    ['fear', 'The fear'],
+    ['eventDate', 'When'],
+    ['firstSign', 'First sign'],
+    ['ifThenPlans', 'If this, then that'],
+    ['actionThisWeek', 'Action this week'],
+    ['likelihood', 'How likely it felt'],
+    ['outcome', 'What happened'],
+  ],
+  problems: [
+    ['rant', 'The rant'],
+    ['clarifyQA', 'Questions'],
+    ['whatIsHappening', 'What is happening'],
+    ['solvedLooksLike', 'Solved looks like'],
+    ['inMyControl', 'In my control'],
+    ['nextStep', 'Next step'],
+    ['tags', 'Tags'],
+    ['status', 'Status'],
+  ],
+  learning_entries: [
+    ['topic', 'Topic'],
+    ['assumptions', 'Beliefs on the shelf'],
+    ['scaryQuestion', 'The scary question'],
+    ['beginnerQuestions', "Beginner's questions"],
+    ['explanation', 'My explanation'],
+    ['review', 'Review'],
+    ['learned', 'What I learned'],
+    ['changedMind', 'Changed my mind'],
+  ],
+  decisions: [
+    ['decision', 'The decision'],
+    ['options', 'Options'],
+    ['unknowns', 'Unknowns'],
+    ['verdict', 'Verdict'],
+    ['findOut', 'To find out'],
+    ['revisitOn', 'Revisit on'],
+    ['postponeCount', 'Times parked again'],
+    ['choice', 'Chose'],
+    ['expectedOutcome', 'Expected'],
+    ['reviewOn', 'Review on'],
+    ['actualOutcome', 'What happened'],
+    ['status', 'Status'],
+  ],
+  briefs: [
+    ['taskAsGiven', 'Task or goal'],
+    ['doneLooksLike', 'Done looks like'],
+    ['deadline', 'Deadline'],
+    ['approver', 'Signs it off'],
+    ['openQuestions', 'Questions to ask'],
+    ['message', 'Message'],
+    ['subgoals', 'Steps'],
+    ['nextAction', 'Next action'],
+  ],
+  checkins: [
+    ['text', 'Check-in'],
+    ['cleanedText', 'In plain words'],
+  ],
+};
+
+export const VALUE_LABEL: Record<string, string> = {
+  happened: 'It happened',
+  partly: 'Partly',
+  didnt: "It didn't",
+  decide_now: 'Decide now',
+  park: 'Park it',
+  pick_one: 'Pick one and move on',
+  open: 'Open',
+  parked: 'Parked',
+  decided: 'Decided',
+  reviewed: 'Reviewed',
+  resolved: 'Resolved',
+};

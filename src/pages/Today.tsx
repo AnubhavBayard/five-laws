@@ -1,4 +1,5 @@
-import { IonBadge, IonButton, IonItem, IonLabel, IonList, useIonRouter } from '@ionic/react';
+import { IonBadge, IonButton, IonIcon, IonItem, IonLabel, IonList, useIonRouter } from '@ionic/react';
+import { settingsOutline } from 'ionicons/icons';
 import type { Law } from '@shared/laws';
 import { useState } from 'react';
 import { aiAvailable, runStepEvent } from '../ai/runStep';
@@ -77,7 +78,14 @@ export default function Today() {
   const confident = !!s.suggestion && s.suggestion.confidence >= MIN_CONFIDENCE;
 
   return (
-    <Page title="Today">
+    <Page
+      title="Today"
+      end={
+        <IonButton routerLink="/tabs/settings" aria-label="Settings">
+          <IonIcon slot="icon-only" icon={settingsOutline} aria-hidden="true" />
+        </IonButton>
+      }
+    >
       <p className="numeral">{todayLabel()}</p>
 
       {s.step === 'input' && (
