@@ -1,0 +1,134 @@
+/* "A book you write in". Colour tokens first, then Ionic mapping, then book typography. */
+:root {
+  --paper: #faf7f0;
+  --paper-raised: #fffdf8;
+  --ink: #1b2a4a;
+  --ink-soft: #4a5672; /* 6.9:1 on paper */
+  --pen: #1f47b8; /* user handwriting, 7.4:1 on paper */
+  --highlight: #ffe766;
+  --highlight-ink: #1b2a4a;
+  --rule: #e4ddcc;
+  --danger: #a3261b;
+
+  --font-read: 'Source Serif 4', Georgia, serif;
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-hand: 'Caveat', 'Segoe Print', cursive;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #16181d;
+    --paper-raised: #1e2128;
+    --ink: #ece6d8;
+    --ink-soft: #b5b0a4; /* 8.4:1 on paper */
+    --pen: #9cbcff; /* 9.1:1 on paper */
+    --highlight: #6b5a12;
+    --highlight-ink: #fff6cc;
+    --rule: #30343d;
+    --danger: #ff8a7a;
+  }
+}
+
+:root {
+  --ion-font-family: var(--font-read);
+  --ion-background-color: var(--paper);
+  --ion-background-color-rgb: 250, 247, 240;
+  --ion-text-color: var(--ink);
+  --ion-text-color-rgb: 27, 42, 74;
+  --ion-item-background: transparent;
+  --ion-toolbar-background: var(--paper);
+  --ion-toolbar-color: var(--ink);
+  --ion-tab-bar-background: var(--paper-raised);
+  --ion-tab-bar-color: var(--ink-soft);
+  --ion-tab-bar-color-selected: var(--ink);
+  --ion-border-color: var(--rule);
+  --ion-card-background: var(--paper-raised);
+
+  --ion-color-primary: var(--ink);
+  --ion-color-primary-contrast: var(--paper);
+  --ion-color-primary-shade: var(--ink);
+  --ion-color-primary-tint: var(--ink-soft);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ion-background-color-rgb: 22, 24, 29;
+    --ion-text-color-rgb: 236, 230, 216;
+  }
+}
+
+/* Typography */
+h1, h2, h3, .display {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--ink);
+}
+
+.page {
+  max-width: 38rem;
+  margin: 0 auto;
+  padding: 1.5rem 1.5rem 3rem;
+  font-size: 1.0625rem;
+  line-height: 1.65;
+}
+
+.muted { color: var(--ink-soft); }
+
+.highlight {
+  background: linear-gradient(transparent 12%, var(--highlight) 12%, var(--highlight) 88%, transparent 88%);
+  color: var(--highlight-ink);
+  padding: 0 0.15em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+/* Anything the user wrote */
+.hand {
+  font-family: var(--font-hand);
+  color: var(--pen);
+  font-size: 1.35em;
+  line-height: 1.3;
+}
+
+.numeral {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.footnote {
+  border-top: 1px solid var(--rule);
+  margin-top: 2rem;
+  padding-top: 0.75rem;
+  font-size: 0.875rem;
+  color: var(--ink-soft);
+}
+
+.paper-input {
+  --background: var(--paper-raised);
+  --color: var(--pen);
+  --placeholder-color: var(--ink-soft);
+  --placeholder-opacity: 1;
+  font-family: var(--font-hand);
+  font-size: 1.4rem;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+}
+
+.empty {
+  border: 1px dashed var(--rule);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  color: var(--ink-soft);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
