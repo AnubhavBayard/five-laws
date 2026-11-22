@@ -9,3 +9,4 @@ supabase/.branches
 .DS_Store
 public/assets/sql-wasm.wasm
 tsconfig.tsbuildinfo
+.claude/settings.local.json
