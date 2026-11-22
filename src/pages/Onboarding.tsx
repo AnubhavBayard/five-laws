@@ -52,7 +52,6 @@ export default function Onboarding() {
       checkinTime,
       aiEnabled: useAi,
       aiConsentAt: useAi ? now : null,
-      unloadReminder: false,
       onboardedAt: now,
     });
     void rescheduleAll();

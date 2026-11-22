@@ -3,7 +3,7 @@ import { setDb } from './client';
 import { checkins, fears, profileRepo, questionLog } from './repos';
 import { migratedTestDb } from './testDb';
 
-const profile = { lifeStage: 'freelancer' as const, areas: ['money' as const], checkinTime: '07:45', aiEnabled: true, aiConsentAt: '2026-11-19T10:00:00.000Z', unloadReminder: false, onboardedAt: '2026-11-19T10:00:00.000Z' };
+const profile = { lifeStage: 'freelancer' as const, areas: ['money' as const], checkinTime: '07:45', aiEnabled: true, aiConsentAt: '2026-11-19T10:00:00.000Z', onboardedAt: '2026-11-19T10:00:00.000Z' };
 
 async function seed() {
   await profileRepo.save(profile);

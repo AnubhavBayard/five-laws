@@ -14,7 +14,6 @@ export const UserProfile = z.object({
   checkinTime: z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/),
   aiEnabled: z.boolean(),
   aiConsentAt: stamp.nullable(),
-  unloadReminder: z.boolean(),
   onboardedAt: stamp,
 });
 export type UserProfile = z.infer<typeof UserProfile>;

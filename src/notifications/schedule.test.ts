@@ -13,7 +13,7 @@ const ln = vi.hoisted(() => ({
 }));
 vi.mock('@capacitor/local-notifications', () => ({ LocalNotifications: ln }));
 
-const profile: UserProfile = { lifeStage: 'student', areas: ['studies'], checkinTime: '20:30', aiEnabled: false, aiConsentAt: null, unloadReminder: false, onboardedAt: '2026-11-01T10:00:00.000Z' };
+const profile: UserProfile = { lifeStage: 'student', areas: ['studies'], checkinTime: '20:30', aiEnabled: false, aiConsentAt: null, onboardedAt: '2026-11-01T10:00:00.000Z' };
 const meta = (id: string) => ({ id, createdAt: '2026-11-01T10:00:00.000Z', updatedAt: '2026-11-01T10:00:00.000Z', lifeArea: 'studies' as const });
 const fear = (id: string, eventDate: string | null, outcome: Fear['outcome'] = null): Fear => ({
   ...meta(id), fear: 'Private fear text', eventDate, firstSign: '', ifThenPlans: [], actionThisWeek: '', likelihood: 50, outcome, resolvedAt: null,

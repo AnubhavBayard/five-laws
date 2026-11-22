@@ -18,7 +18,6 @@ const profile: UserProfile = {
   checkinTime: '21:00',
   aiEnabled: true,
   aiConsentAt: '2026-11-19T10:00:00.000Z',
-  unloadReminder: false,
   onboardedAt: '2026-11-19T10:00:00.000Z',
 };
 const input = { goal: 'Launch my portfolio site' };

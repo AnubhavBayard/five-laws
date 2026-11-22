@@ -62,6 +62,7 @@ CREATE INDEX briefs_created ON briefs (createdAt);
 CREATE INDEX question_log_day ON question_log (day);
 `,
   },
+  { version: 2, sql: `ALTER TABLE user_profile DROP COLUMN unloadReminder;` },
 ];
 
 export async function migrate(db: Db): Promise<number> {
