@@ -72,7 +72,7 @@ Secrets for `ai-step`:
 | `MODEL_WRITER` | Model for steps that write for the user (briefs, messages, insights) |
 | `AI_DAILY_CAP` | Requests per user per day, default 60 |
 
-The chosen models must support forced tool calls: requests set `provider.require_parameters`, so OpenRouter only routes to providers that honour `tool_choice`.
+The chosen models must support forced tool calls (`tool_choice` naming one function). Do not set `provider.require_parameters`: OpenRouter then rejects forced `tool_choice` with a 404. Output is validated and retried once regardless.
 
 ### Local Supabase
 

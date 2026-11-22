@@ -25,7 +25,7 @@ describe('handleStep', () => {
     expect(result).toEqual({ ok: true, output: { ...goodRoute, secondaryLaw: null } });
     expect(meta).toMatchObject({ stepId: 'route_checkin', model: 'fast-model', valid: true, retry: false });
     const body = sent(0);
-    expect(body).toMatchObject({ model: 'fast-model', temperature: 0, seed: 7, parallel_tool_calls: false, tool_choice: { type: 'function', function: { name: 'route_checkin' } }, provider: { require_parameters: true } });
+    expect(body).toMatchObject({ model: 'fast-model', temperature: 0, seed: 7, parallel_tool_calls: false, tool_choice: { type: 'function', function: { name: 'route_checkin' } } });
     expect(body.tools).toHaveLength(1);
     expect(body.messages[1].content).toContain('a student');
     expect(JSON.stringify(meta)).not.toContain('maths');

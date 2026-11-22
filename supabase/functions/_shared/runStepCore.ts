@@ -111,7 +111,6 @@ export async function handleStep(body: unknown, deps: CoreDeps): Promise<{ resul
           temperature: 0,
           seed: 7,
           max_tokens: def.maxTokens,
-          provider: { require_parameters: true },
         }),
       });
       if (!res.ok) return fail('upstream');
